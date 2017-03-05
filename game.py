@@ -6,6 +6,9 @@ from board import Board
 from board import FullSquareException
 
 MAX_SCREEN_HEIGHT = 24
+TEXT_START_POS = 26
+TEXT_START_ROW = 14
+MAX_STR_LEN = 18
 
 class Game(object):
     def __init__(self):
@@ -126,8 +129,6 @@ def bagMove(G, c):
         if G.highlight > len(G.bag):
             G.highlight = len(G.bag) - 1
 
-MAX_STR_LEN = 17
-
 def writeToLog(string, append=False):
     if append:
         f = open("out.log", "a")
@@ -137,29 +138,29 @@ def writeToLog(string, append=False):
     f.close()
 
 def clearText(stdscr):
-    row = 15
+    row = TEXT_START_ROW
 
     while row < MAX_SCREEN_HEIGHT:
-        stdscr.addstr(row, 27, " " * MAX_STR_LEN)
+        stdscr.addstr(row, TEXT_START_POS, " " * MAX_STR_LEN)
         row += 1
 
 def writeText(stdscr, string):
     clearText(stdscr)
-    row = 15
+    row = TEXT_START_ROW
     words = string.split(" ")
 
     currentLine = words[0]
 
     for word in words[1:]:
         if len(word) + len(currentLine) + 1 > MAX_STR_LEN:
-            stdscr.addstr(row, 27, currentLine)
+            stdscr.addstr(row, TEXT_START_POS, currentLine)
             row += 1
             currentLine = word
         else:
             currentLine += " " + word
 
     # Empty the buffer
-    stdscr.addstr(row, 27, currentLine)
+    stdscr.addstr(row, TEXT_START_POS, currentLine)
 
 def main(stdscr):
     initColors()
