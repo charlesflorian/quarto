@@ -5,6 +5,8 @@ from bag import Bag
 from board import Board
 from board import FullSquareException
 
+MAX_SCREEN_HEIGHT = 24
+
 class Game(object):
     def __init__(self):
         self.board = Board()
@@ -134,14 +136,30 @@ def writeToLog(string, append=False):
     f.write(string + "\n")
     f.close()
 
-def writeText(stdscr, string):
+def clearText(stdscr):
     row = 15
-    while len(string) > 0:
-        # TODO: Implement a way to break lines. For now, whatever.
-        endLine = MAX_STR_LEN
-        stdscr.addstr(row, 27, string[:endLine])
+
+    while row < MAX_SCREEN_HEIGHT:
+        stdscr.addstr(row, 27, " " * MAX_STR_LEN)
         row += 1
-        string = string[endLine:]
+
+def writeText(stdscr, string):
+    clearText(stdscr)
+    row = 15
+    words = string.split(" ")
+
+    currentLine = words[0]
+
+    for word in words[1:]:
+        if len(word) + len(currentLine) + 1 > MAX_STR_LEN:
+            stdscr.addstr(row, 27, currentLine)
+            row += 1
+            currentLine = word
+        else:
+            currentLine += " " + word
+
+    # Empty the buffer
+    stdscr.addstr(row, 27, currentLine)
 
 def main(stdscr):
     initColors()
