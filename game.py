@@ -204,6 +204,7 @@ def main(stdscr):
             stdscr.clear()
 
             G = Game()
+            G.draw(stdscr)
 
 
 if __name__ == "__main__":
