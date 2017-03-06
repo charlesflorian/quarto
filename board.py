@@ -11,7 +11,7 @@ class SizeException(Exception):
         self.size = size
 
 class Board(object):
-    def __init__(self):
+    def __init__(self, *args):
         self.data = [[None for i in range(4)] for j in range(4)]
 
     def placePiece(self, whichPiece, X, Y):
@@ -52,6 +52,22 @@ class Board(object):
                 if self.data[i][j] is not None:
                     self.data[i][j].draw(stdscr, (i + 1) * 5 + 1, (j + 1) * 5 - 1,
                             [highlight // 4, highlight % 4] == [i, j])
+
+    def Pieces(self):
+        out = []
+        for i in range(4):
+            for j in range(4):
+                if self.data[i][j] is not None:
+                    out.append((self.data[i][j], i, j))
+        return out
+
+    def emptyTiles(self):
+        out = []
+        for i in range(4):
+            for j in range(4):
+                if self.data[i][j] is None:
+                    out.append((i, j))
+        return out
 
 if __name__ == "__main__":
     B = Board()

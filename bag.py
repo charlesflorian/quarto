@@ -3,7 +3,7 @@ import random
 from piece import Piece
 
 class Bag(object):
-    def __init__(self):
+    def __init__(self, *args):
         self.bag = []
         for i in range(16):
             color = i % 2

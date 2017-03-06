@@ -11,7 +11,7 @@ TEXT_START_ROW = 14
 MAX_STR_LEN = 18
 
 class Game(object):
-    def __init__(self):
+    def __init__(self, *args):
         self.board = Board()
         self.bag = Bag()
 
@@ -145,6 +145,14 @@ def clearText(stdscr):
         row += 1
 
 def writeText(stdscr, string):
+    """
+    This just uses a greedy algorithm to write text to the screen according
+    to the constants at the top of the page.
+
+    This will run into problems if there is a word that is longer than
+    MAX_STR_LEN characters long; I probably should fix that, but that isn't
+    the highest priority.
+    """
     clearText(stdscr)
     row = TEXT_START_ROW
     words = string.split(" ")
