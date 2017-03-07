@@ -25,9 +25,6 @@ class Bag(object):
     def __len__(self):
         return len(self.bag)
 
-    def __iter__(self):
-        return self.bag
-
     def isIn(self, piece):
         return piece in self.bag
 

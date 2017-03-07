@@ -30,6 +30,8 @@ class Board(object):
 
         self.data[X][Y] = whichPiece
 
+        return self
+
     def hasWon(self):
         rows = [self.checkSet(self.data[i]) for i in range(4)]
         cols = [self.checkSet([self.data[j][i] for j in range(4)]) for i in range(4)]
