@@ -14,7 +14,6 @@ class NotInBagException(Exception):
     def __init__(self, piece):
         self.piece = piece
 
-
 class Piece(object):
     def __init__(self, *args):
         if len(args) != 4:
@@ -24,11 +23,6 @@ class Piece(object):
             if i not in [0, 1]:
                 raise InvalidPieceException(args)
 
-        self.BOTTOM = [curses.ACS_LLCORNER, curses.ACS_HLINE, curses.ACS_LRCORNER]
-        self.TOP = [[curses.ACS_ULCORNER, curses.ACS_HLINE, curses.ACS_URCORNER],
-                [curses.ACS_ULCORNER, curses.ACS_TTEE, curses.ACS_URCORNER]]
-        self.MIDDLE = [[curses.ACS_VLINE, 0x20, curses.ACS_VLINE],
-                [curses.ACS_VLINE, curses.ACS_DIAMOND, curses.ACS_VLINE]]
         self.piece = args
 
     def __eq__(self, other):
@@ -57,6 +51,20 @@ class Piece(object):
                 stdscr.move(X + i, Y + j)
                 stdscr.addch(0x20, curses.color_pair(color))
 
+    @staticmethod
+    def BottomRow():
+        return [curses.ACS_LLCORNER, curses.ACS_HLINE, curses.ACS_LRCORNER]
+
+    @staticmethod
+    def TopRow(which):
+        return [[curses.ACS_ULCORNER, curses.ACS_HLINE, curses.ACS_URCORNER],
+                [curses.ACS_ULCORNER, curses.ACS_TTEE, curses.ACS_URCORNER]][which]
+
+    @staticmethod
+    def MiddleRow(which):
+        return [[curses.ACS_VLINE, 0x20, curses.ACS_VLINE],
+                [curses.ACS_VLINE, curses.ACS_DIAMOND, curses.ACS_VLINE]][which]
+
     def draw(self, stdscr, X, Y, highlight=False):
         """
         X and Y will be of the bottom left corner of the piece
@@ -71,20 +79,24 @@ class Piece(object):
 
         row = X
 
+        bottom = Piece.BottomRow()
+        middle = Piece.MiddleRow(self.piece[2])
+        top = Piece.TopRow(self.piece[3])
+
         for i in range(3):
             stdscr.move(row, Y + i)
-            stdscr.addch(self.BOTTOM[i], curses.color_pair(whichColor))
+            stdscr.addch(bottom[i], curses.color_pair(whichColor))
 
         row -= 1
         for i in range(1 + 2 * self.piece[0]):
             for j in range(3):
                 stdscr.move(row, Y + j)
-                stdscr.addch(self.MIDDLE[self.piece[2]][j], curses.color_pair(whichColor))
+                stdscr.addch(middle[j], curses.color_pair(whichColor))
             row -= 1
 
         for i in range(3):
             stdscr.move(row, Y + i)
-            stdscr.addch(self.TOP[self.piece[3]][i], curses.color_pair(whichColor))
+            stdscr.addch(top[i], curses.color_pair(whichColor))
         row -= 1
 
         for i in range(2 * (1 - self.piece[0])):
@@ -97,3 +109,4 @@ class Piece(object):
 
 if __name__ == "__main__":
     P = Piece(1, 1, 1, 1)
+    print(P)

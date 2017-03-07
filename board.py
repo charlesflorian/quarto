@@ -14,6 +14,14 @@ class Board(object):
     def __init__(self, *args):
         self.data = [[None for i in range(4)] for j in range(4)]
 
+        if len(args) > 0 and type(args[0]) is Board:
+            for i in range(4):
+                for j in range(4):
+                    if type(args[0].data[i][j]) is Piece:
+                        # This makes new copies of the pieces on the original
+                        # board; this may be overkill.
+                        self.data[i][j] = Piece(*args[0].data[i][j].piece)
+
     def placePiece(self, whichPiece, X, Y):
         if X > 3 or X < 0 or Y > 3 or Y < 0:
             raise IndexError

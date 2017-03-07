@@ -5,13 +5,20 @@ from game import Game
 
 class AI(object):
     def __init__(self, board, bag, piece, depth=16):
-        pass
+        assert(type(board) is Board)
+        assert(type(bag) is Bag)
+        assert(type(piece) is Piece)
+        self.board = Board(board)
+        self.bag = Bag(bag)
+        self.piece = Piece(*piece.piece)
 
     def nextMove(self):
+        for piece in self.bag:
+            for x, y in self.board.emptyTiles()
         pass
 
     def nextPiece(self):
         pass
 
 if __name__ == "__main__":
-    pass
+    ai = AI(Board(), Bag(), Piece(1,1,1,1))

@@ -206,7 +206,7 @@ def main(stdscr):
                 writeText(stdscr, "Player one wins! This is really great!")
             else:
                 #stdscr.addstr(15, 27, "Player two wins!")
-                writeText(stdscr, "Player two wins!")
+                writeText(stdscr, "Player two wins! This is also a good outcome!")
 
             stdscr.getch()
 
