@@ -13,9 +13,9 @@ class AI(object):
         self.piece = Piece(*piece.piece)
 
     def nextMove(self):
-        for piece in self.bag:
-            for x, y in self.board.emptyTiles()
-        pass
+        for x, y in self.board.emptyTiles():
+            if Board(self.board).placePiece(self.piece, x, y).hasWon():
+                return (x, y)
 
     def nextPiece(self):
         pass
