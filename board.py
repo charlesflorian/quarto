@@ -32,6 +32,15 @@ class Board(object):
 
         return self
 
+    def removePiece(self, X, Y):
+        if X > 3 or X < 0 or Y > 3 or Y < 0:
+            raise IndexError
+
+        P = self.data[X][Y]
+        self.data[X][Y] = None
+
+        return P
+
     def hasWon(self):
         rows = [self.checkSet(self.data[i]) for i in range(4)]
         cols = [self.checkSet([self.data[j][i] for j in range(4)]) for i in range(4)]
